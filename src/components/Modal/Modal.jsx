@@ -1,61 +1,38 @@
-import PropTypes from 'prop-types';
+import '../styles.css';
 import { Component } from 'react';
+import PropTypes from 'prop-types';
 
-export class Modal extends Component {
+class Modal extends Component {
+  static propTypes = {
+    src: PropTypes.string.isRequired,
+    alt: PropTypes.string.isRequired,
+    onClick: PropTypes.func.isRequired,
+  };
+
   componentDidMount() {
-    window.addEventListener('keydown', this.onEscPress);
+    window.addEventListener('keydown', this.closeModal);
   }
 
   componentWillUnmount() {
-    window.removeEventListener('keydown', this.onEscPress);
+    window.removeEventListener('keydown', this.closeModal);
   }
 
-  onEscPress = event => {
-    if (event.code === 'Escape') {
-      this.props.closeModalWindow();
-    }
-  };
-
-  handleClose = event => {
-    if (event.currentTarget === event.target) {
-      this.props.closeModalWindow();
+  closeModal = ({ target, currentTarget, code }) => {
+    if (code === 'Escape' || target === currentTarget) {
+      this.props.onClick();
     }
   };
 
   render() {
-    const { url, alt } = this.props;
-
+    const { src, alt } = this.props;
     return (
-      <div
-        onClick={this.handleClose}
-        style={{
-          position: 'fixed',
-          top: '0',
-          left: '0',
-          width: '100vw',
-          height: '100vh',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          backgroundColor: 'rgba(0, 0, 0, 0.8)',
-          zIndex: '1200',
-        }}
-      >
-        <div
-          style={{
-            maxWidth: 'calc(100vw - 48px)',
-            maxHeight: 'calc(100vh - 24px)',
-          }}
-        >
-          <img src={url} alt={alt} />
+      <div className="Overlay" onClick={this.closeModal}>
+        <div className="Modal">
+          <img src={src} alt={alt} width="800" height="600" />
         </div>
       </div>
     );
   }
 }
 
-Modal.propTypes = {
-  url: PropTypes.string.isRequired,
-  alt: PropTypes.string.isRequired,
-  closeModalWindow: PropTypes.func.isRequired,
-};
+export default Modal;

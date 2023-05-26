@@ -1,21 +1,20 @@
-import { ThreeDots } from 'react-loader-spinner';
+import {
+  LoaderContainer,
+  LoaderCircle,
+  LoaderShadow,
+} from './Loader.components';
 
-export function Loader() {
+const Loader = () => {
   return (
-    <div
-      style={{
-        display: 'flex',
-        justifyContent: 'center',
-        marginTop: '12px',
-      }}
-    >
-      <ThreeDots
-        type="Oval"
-        color="#0057b7"
-        height={100}
-        width={100}
-        timeout={3000}
-      />
-    </div>
+    <LoaderContainer>
+      <LoaderCircle></LoaderCircle>
+      <LoaderCircle></LoaderCircle>
+      <LoaderCircle></LoaderCircle>
+      <LoaderShadow></LoaderShadow>
+      <LoaderShadow></LoaderShadow>
+      <LoaderShadow></LoaderShadow>
+    </LoaderContainer>
   );
-}
+};
+
+export default Loader;
